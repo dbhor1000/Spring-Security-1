@@ -38,7 +38,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
             jwtToken = requestTokenHeader.substring(7);     //Извлекли token
             try {
-                username = jwtTokenUtil.getUsernameFromToken(jwtToken); //Извлекли username из token
+                username = jwtTokenUtil.getUsernameFromToken(jwtToken); //Извлекли username из token. Переход в класс JwtTokenUtil для различных проверок токена.
+                //Проверки не пройдут, если в токене ошибка и выбросится exception. Пользователь не будет аутентифицирован, потом переход к следующему фильтру,
+                //но т.к. этот фильтр не пройден, запрос не выполнится.
             } catch (Exception e) {
                 // Handle exception
             }
